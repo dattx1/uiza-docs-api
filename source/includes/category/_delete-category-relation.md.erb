@@ -9,20 +9,21 @@ curl -X DELETE \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "entityId":"<%= config[:uiza_entity_id] %>",
-    "metadataIds":["095778fa-7e42-45cc-8a0e-6118e540b61d","e00586b9-032a-46a3-af71-d275f01b03cf"]
+    "appId": "<%= config[:app_id] %>",
+    "entityId": "<%= config[:category_create_relation_entity_id] %>",
+    "metadataIds": ["<%= config[:category_create_relation_category_id_1] %>", "<%= config[:category_create_relation_category_id_2] %>"]
 }'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  entityId: "your-entity-id",
-  metadataIds: ["your-category-id-1", "your-category-id-2"]
+  entityId: "<%= config[:category_create_relation_entity_id] %>",
+  metadataIds: ["<%= config[:category_create_relation_category_id_1] %>", "<%= config[:category_create_relation_category_id_2] %>"]
 }
 
 begin
@@ -201,8 +202,8 @@ Delete relation for entity and category
     "data": [
         {
             "id": "5620ed3c-b725-4a9a-8ec1-ecc9df3e5aa6",
-            "entityId": "<%= config[:uiza_entity_id] %>",
-            "metadataId": "095778fa-7e42-45cc-8a0e-6118e540b61d"
+            "entityId": "<%= config[:category_delete_relation_entity_id] %>",
+            "metadataId": "<%= config[:category_delete_relation_category_id_1] %>"
         },
     ],
     "metadata": {

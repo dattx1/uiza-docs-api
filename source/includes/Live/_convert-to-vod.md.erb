@@ -6,16 +6,25 @@
 curl -X POST \
   <%= config[:endpoint] %>/live/entity/dvr/convert-to-vod?id=3fec45e9-932b-4efe-b97f-dc3053acaa05 \
   -H 'Authorization: <%= config[:token] %>'
+
+curl -X POST \
+  <%= config[:endpoint] %>/live/entity/dvr/convert-to-vod \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:live_convert_to_vod] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  live = Uiza::Live.convert_to_vod "your-record-id" # Identifier of record (get from list record)
+  live = Uiza::Live.convert_to_vod "<%= config[:live_convert_to_vod] %>" # Identifier of record (get from list record)
   puts live.id
 rescue Uiza::Error::UizaError => e
   puts "description_link: #{e.description_link}"

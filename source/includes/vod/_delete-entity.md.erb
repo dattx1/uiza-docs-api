@@ -5,19 +5,24 @@
 
 ```shell
 curl -X DELETE \
-  <%= config[:endpoint] %>/media/entity?id=<%= config[:uiza_entity_id] %> \
-  -H 'Authorization: <%= config[:token] %>'
+  '<%= config[:endpoint] %>/media/entity' \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:entity_delete_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  entity = Uiza::Entity.delete "your-entity-id"
-  puts entity.id
+  response = Uiza::Entity.delete "<%= config[:entity_delete_id] %>"
+  puts response.id
 rescue Uiza::Error::UizaError => e
   puts "description_link: #{e.description_link}"
   puts "code: #{e.code}"
@@ -156,7 +161,7 @@ Permanently deletes a entity. It cannot be undone. Also immediately cancels any 
 
 ```json
 {
-  "id": "<%= config[:uiza_entity_id] %>"
+  "id": "<%= config[:entity_delete_id] %>"
 }
 ```
 

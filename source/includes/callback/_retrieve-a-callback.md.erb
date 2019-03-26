@@ -4,19 +4,23 @@
 
 ```shell
 curl -X GET \
-  <%= config[:endpoint] %>/api/private/v3/media/entity/callback?id=0a6bf245-1cce-494f-a193-b5a44aa05558 \
+  <%= config[:endpoint] %>/media/entity/callback \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:callback_retrieve_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  callback = Uiza::Callback.retrieve "your-callback-id"
+  callback = Uiza::Callback.retrieve "<%= config[:callback_retrieve_id] %>"
   puts callback.id
   puts callback.url
 rescue Uiza::Error::UizaError => e
@@ -157,13 +161,15 @@ Retrieves the details of an existing callback.
 
 ```json
 {
-  "id": "0a6bf245-1cce-494f-a193-b5a44aa05558",
-  "url": "https://callback-url.uiza.co",
-  "headersData": null,
-  "jsonData": {
-    "text": "example callback"
+  "id": "<%= config[:callback_retrieve_id] %>",
+  "url": "<%= config[:callback_retrieve_url] %>",
+  "headersData": {
+    "data": "<%= config[:callback_retrieve_headers_data] %>"
   },
-  "method": "POST",
+  "jsonData": {
+    "data": "<%= config[:callback_retrieve_json_data] %>"
+  },
+  "method": "<%= config[:callback_retrieve_method] %>",
   "status": 1,
   "createdAt": "2018-06-23T01:27:08.000Z",
   "updatedAt": "2018-06-23T01:27:08.000Z"

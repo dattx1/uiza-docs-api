@@ -5,14 +5,18 @@
 
 ```shell
 curl -X GET \
-  <%= config[:endpoint] %>/admin/app/config/aws \
-  -H 'Authorization: <%= config[:token] %>'
+  '<%= config[:endpoint] %>/admin/app/config/aws' \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin

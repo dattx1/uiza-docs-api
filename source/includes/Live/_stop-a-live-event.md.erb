@@ -4,19 +4,25 @@
 
 ```shell
 curl -X PUT \
-  <%= config[:endpoint] %>/live/entity/feed?id=8b83886e-9cc3-4eab-9258-ebb16c0c73de \
-  -H 'Authorization: <%= config[:token] %>'
+  <%= config[:endpoint] %>/live/entity/feed \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:live_stop_feed_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  live = Uiza::Live.stop_feed "your-live-id"
-  puts live.id
-  puts live.name
+  response = Uiza::Live.stop_feed "<%= config[:live_stop_feed_id] %>"
+  puts response.message
+  puts response.entityId
 rescue Uiza::Error::UizaError => e
   puts "description_link: #{e.description_link}"
   puts "code: #{e.code}"
@@ -155,7 +161,8 @@ Stop a live event
 
 ```json
 {
-  "id": "d3a7b3e7-1b0b-4d52-b804-aa000a0bd711"
+  "message": "Stop feed success",
+  "entityId": "<%= config[:live_stop_feed_id] %>"
 }
 ```
 

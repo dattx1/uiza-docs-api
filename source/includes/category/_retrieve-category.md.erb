@@ -5,18 +5,23 @@
 
 ```shell
 curl -X GET \
-  <%= config[:endpoint] %>/media/metadata?id=095778fa-7e42-45cc-8a0e-6118e540b61d \
-  -H 'Authorization: <%= config[:token] %>'
+  <%= config[:endpoint] %>/media/metadata \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:category_retrieve_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  category = Uiza::Category.retrieve "your-category-id"
+  category = Uiza::Category.retrieve "<%= config[:category_retrieve_id] %>"
   puts category.id
   puts category.name
 rescue Uiza::Error::UizaError => e
@@ -157,12 +162,12 @@ Retrieve the details of an existing category. Supply the unique category ID from
 
 ```json
 {
-  "id": "f932aa79-852a-41f7-9adc-19935034f944",
-  "name": "Playlist sample",
-  "description": "Playlist description",
+  "id": "<%= config[:category_retrieve_id] %>",
+  "name": "<%= config[:category_retrieve_name] %>",
+  "description": "<%= config[:category_retrieve_description] %>",
   "slug": "playlist-sample",
   "type": "playlist",
-  "orderNumber": 3,
+  "orderNumber": <%= config[:category_retrieve_order_number] %>,
   "icon": "https:///example.com/image002.png",
   "status": 1,
   "createdAt": "2018-06-18T04:29:05.000Z",

@@ -6,16 +6,24 @@
 curl -X GET \
   <%= config[:endpoint] %>/media/entity/search?keyword=dance \
   -H 'Authorization: <%= config[:token] %>'
+curl -X GET \
+  '<%= config[:endpoint] %>/media/entity/search' \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "keyword": "<%= config[:entity_search_keyword] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  entities = Uiza::Entity.search "your-keyword"
+  entities = Uiza::Entity.search "<%= config[:entity_search_keyword] %>"
   puts entities.first.id
   puts entities.first.name
 rescue Uiza::Error::UizaError => e

@@ -5,19 +5,24 @@
 
 ```shell
 curl -X DELETE \
-  <%= config[:endpoint] %>/media/storage?id=cd003123-7ec9-4f3a-9d7c-f2de93e83e49 \
-  -H 'Authorization: <%= config[:token] %>'
+  <%= config[:endpoint] %>/media/storage \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:storage_remove_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  storage = Uiza::Storage.remove "your-storage-id"
-  puts storage.id
+  response = Uiza::Storage.remove "<%= config[:storage_remove_id] %>"
+  puts response.id
 rescue Uiza::Error::UizaError => e
   puts "description_link: #{e.description_link}"
   puts "code: #{e.code}"

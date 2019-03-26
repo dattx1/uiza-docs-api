@@ -8,38 +8,39 @@ curl -X POST \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name":"test event",
-    "mode":"push",
-    "encode":1,
-    "dvr":1,
-    "description":"This is for test event",
-    "poster":"//image1.jpeg",
-    "thumbnail":"//image1.jpeg",
-    "linkStream":[
-              "https://playlist.m3u8"
-            ],
-    "resourceMode":"single"
+    "appId": "<%= config[:app_id] %>",
+    "name": "<%= config[:live_create_name] %>",
+    "mode": "<%= config[:live_create_mode] %>",
+    "encode": <%= config[:live_create_encode] %>,
+    "dvr": <%= config[:live_create_dvr] %>,
+    "description": "<%= config[:live_create_description] %>",
+    "poster": "<%= config[:live_create_poster] %>",
+    "thumbnail": "<%= config[:live_create_thumbnail] %>",
+    "linkStream": [
+      "<%= config[:live_create_link_stream] %>"
+    ],
+    "resourceMode": "<%= config[:live_create_resource_mode] %>"
 }'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  name: "test event",
-  mode: "push",
-  encode: 1,
-  dvr: 1,
-  description: "This is for test event",
-  poster: "https://example.com/poster.jpeg",
-  thumbnail: "https://example.com/poster.jpeg",
+  name: "<%= config[:live_create_name] %>",
+  mode: "<%= config[:live_create_mode] %>",
+  encode: <%= config[:live_create_encode] %>,
+  dvr: <%= config[:live_create_dvr] %>,
+  description: "<%= config[:live_create_description] %>",
+  poster: "<%= config[:live_create_poster] %>",
+  thumbnail: "<%= config[:live_create_thumbnail] %>",
   linkStream: [
-    "https://playlist.m3u8"
+    "<%= config[:live_create_link_stream] %>"
   ],
-  resourceMode: "single"
+  resourceMode: "<%= config[:live_create_resource_mode] %>"
 }
 
 begin
@@ -258,7 +259,7 @@ Creates a new live event to manage a live stream.
 
 ```json
 {
-  "id": "8b83886e-9cc3-4eab-9258-ebb16c0c73de"
+  "id": "<%= config[:live_create_id] %>"
 }
 ```
 

@@ -5,18 +5,23 @@
 
 ```shell
 curl -X POST \
-  <%= config[:endpoint] %>/media/entity/publish?id=<%= config[:uiza_entity_id] %> \
-  -H 'Authorization: <%= config[:token] %>'
+  '<%= config[:endpoint] %>/media/entity/publish' \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:entity_publish_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  response = Uiza::Entity.publish "your-entity-id"
+  response = Uiza::Entity.publish "<%= config[:entity_publish_id] %>"
   puts response.message
   puts response.entityId
 rescue Uiza::Error::UizaError => e
@@ -151,7 +156,7 @@ catch (UizaException ex)
 }
 ```
 
-All entities need to be [published](#publish-entity-to-cdn) before the public can access. Unpublished videos can still be [edited](#update-an-entity), [listed](#list-entities) by `API` or using `Dashboard` but [Player](#Player) will not play. 
+All entities need to be [published](#publish-entity-to-cdn) before the public can access. Unpublished videos can still be [edited](#update-an-entity), [listed](#list-entities) by `API` or using `Dashboard` but [Player](#Player) will not play.
 
 ```If you use Uiza's `Quick Start` on App's dashboard it will get published automatically.```
 
@@ -159,7 +164,7 @@ All entities need to be [published](#publish-entity-to-cdn) before the public ca
 
 ```json
 {
-  "id": "<%= config[:uiza_entity_id] %>",
+  "id": "<%= config[:entity_publish_id] %>",
   "message": "Your entity started publish, check process status with this entity ID",
   "entityId": "42ceb1ab-18ef-4f2e-b076-14299756d182"
 }

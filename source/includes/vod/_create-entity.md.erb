@@ -9,6 +9,7 @@ curl -X POST \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
+    "appId": "<%= config[:app_id] %>",
     "name": "The Evolution of Dance",
     "url": "<%= config[:sample_video] %>",
     "inputType": "http",
@@ -34,17 +35,15 @@ curl -X POST \
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  name: "The Evolution of Dance",
-  url: "<%= config[:sample_video] %>",
-  inputType: "http",
-  description: "Judson Laipply did a fantastic job in performing various dance moves",
-  shortDescription: "How good a dancer can you be?",
-  poster: "<%= config[:sample_poster] %>",
-  thumbnail: "<%= config[:sample_thumbnail] %>"
+  name: "<%= config[:entity_create_name] %>",
+  url: "<%= config[:entity_create_url] %>",
+  inputType: "<%= config[:entity_create_input_type] %>",
+  description: "<%= config[:entity_create_description] %>",
+  shortDescription: "<%= config[:entity_create_short_description] %>"
 }
 
 begin
@@ -179,7 +178,7 @@ With S3 URL, it must be public accessible.
 
 ```json
 {
-  "id": "8b83886e-9cc3-4eab-9258-ebb16c0c73de"
+  "id": "<%= config[:entity_create_id] %>"
 }
 ```
 

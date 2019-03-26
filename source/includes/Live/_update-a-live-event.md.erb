@@ -4,32 +4,33 @@
 
 ```shell
 curl -X PUT \
-  <%= config[:endpoint] %>/live/ \
+  <%= config[:endpoint] %>/live/entity \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id":"8b83886e-9cc3-4eab-9258-ebb16c0c73de",
-    "name":"live test",
-    "mode":"pull",
-    "encode":0,
-    "dvr":1
-    "resourceMode":"single"
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:live_update_id] %>",
+    "name": "<%= config[:live_update_name] %>",
+    "mode": "<%= config[:live_update_mode] %>",
+    "encode": <%= config[:live_update_encode] %>,
+    "dvr": <%= config[:live_update_dvr] %>,
+    "resourceMode": "<%= config[:live_update_resource_mode] %>"
 }'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  id: "your-live-id",
-  name: "live test",
-  mode: "pull",
-  encode: 0,
-  dvr: 1,
-  resourceMode: "single"
+  id: "<%= config[:live_update_id] %>",
+  name: "<%= config[:live_update_name] %>",
+  mode: "<%= config[:live_update_mode] %>",
+  encode: <%= config[:live_update_encode] %>,
+  dvr: <%= config[:live_update_dvr] %>,
+  resourceMode: "<%= config[:live_update_resource_mode] %>"
 }
 
 begin
@@ -214,7 +215,7 @@ Updates the specified live event by setting the values of the parameters passed.
 
 ```json
 {
-  "id": "8b83886e-9cc3-4eab-9258-ebb16c0c73de"
+  "id": "<%= config[:live_update_id] %>"
 }
 ```
 

@@ -5,18 +5,23 @@
 
 ```shell
 curl -X GET \
-  '<%= config[:endpoint] %>/media/entity?id=<%= config[:uiza_entity_id] %>' \
+  '<%= config[:endpoint] %>/media/entity' \
   -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:entity_retrieve_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  entity = Uiza::Entity.retrieve "your-entity-id"
+  entity = Uiza::Entity.retrieve "<%= config[:entity_retrieve_id] %>"
   puts entity.id
   puts entity.name
 rescue Uiza::Error::UizaError => e
@@ -101,7 +106,7 @@ Retrieves the details of an existing entity. Supply the unique entity ID from ei
 
 ```json
 {
-  "id": "<%= config[:uiza_entity_id] %>",
+  "id": "<%= config[:entity_retrieve_id] %>",
   "name": "The Evolution of Dance",
   "description": "Judson Laipply did a fantastic job in performing various dance moves",
   "shortDescription": "How good a dancer can you be?",
@@ -143,4 +148,3 @@ Retrieves the details of an existing entity. Supply the unique entity ID from ei
 **RETURNS**
 
 Returns a entity object if a valid identifier was provided.
-

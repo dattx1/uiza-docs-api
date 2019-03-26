@@ -9,9 +9,10 @@ curl -X PUT \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "<%= config[:uiza_entity_id] %>",
-    "name": "The Evolution of Dance 2",
-    "description": "Judson Laipply did it again with a fantastic job in performing better dance moves",
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:entity_update_id] %>",
+    "name": "<%= config[:entity_update_name] %>",
+    "description": "<%= config[:entity_update_description] %>",
     "shortDescription":"You can never be as good a dancer as Judson Laipply.",
     "poster": "<%= config[:sample_poster] %>",
     "thumbnail": "<%= config[:sample_thumbnail] %>",
@@ -26,12 +27,13 @@ curl -X PUT \
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  id: "your-entity-id",
-  name: "Name edited"
+  id: "<%= config[:entity_update_id] %>",
+  name: "<%= config[:entity_update_name] %>",
+  description: "<%= config[:entity_update_description] %>"
 }
 
 begin
@@ -192,7 +194,7 @@ This request accepts mostly the same arguments as the entity creation call.
 
 ```json
 {
-  "id": "<%= config[:uiza_entity_id] %>"
+  "id": "<%= config[:entity_update_id] %>"
 }
 ```
 

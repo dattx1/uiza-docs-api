@@ -9,10 +9,11 @@ curl -X POST \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name":"Folder sample",
-    "type":"folder",
-    "description":"Folder description",
-    "orderNumber":1,
+    "appId": "<%= config[:app_id] %>",
+    "name": "<%= config[:category_create_name] %>",
+    "type": "<%= config[:category_create_type] %>",
+    "description": "<%= config[:category_create_description] %>",
+    "orderNumber": <%= config[:category_create_order_number] %>,
     "icon":"https://exemple.com/icon.png"
 }'
 ```
@@ -20,13 +21,14 @@ curl -X POST \
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  name: "Folder sample",
-  type: "folder",
-  description: "Folder description"
+  name: "<%= config[:category_create_name] %>",
+  type: "<%= config[:category_create_type] %>",
+  description: "<%= config[:category_create_description] %>",
+  orderNumber: <%= config[:category_create_order_number] %>
 }
 
 begin
@@ -206,7 +208,7 @@ Categories must be created before [adding videos](#create-entity). The differenc
 
 ```json
 {
-  "id": "095778fa-7e42-45cc-8a0e-6118e540b61d"
+  "id": "<%= config[:category_create_id] %>"
 }
 ```
 

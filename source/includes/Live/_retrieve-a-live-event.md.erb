@@ -8,18 +8,19 @@ curl -X GET \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id":"8b83886e-9cc3-4eab-9258-ebb16c0c73de"
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:live_retrieve_id] %>"
 }'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  live = Uiza::Live.retrieve "your-live-id"
+  live = Uiza::Live.retrieve "<%= config[:live_retrieve_id] %>"
   puts live.id
   puts live.name
 rescue Uiza::Error::UizaError => e
@@ -160,19 +161,21 @@ Retrieves the details of an existing event. You need only provide the unique ide
 
 ```json
 {
-  "id": "8b83886e-9cc3-4eab-9258-ebb16c0c73de",
-  "name": "checking 01",
-  "description": "checking",
-  "mode": "pull",
-  "resourceMode": "single",
-  "encode": 0,
+  "id": "<%= config[:live_retrieve_id] %>",
+  "name": "<%= config[:live_retrieve_name] %>",
+  "description": "<%= config[:live_retrieve_description] %>",
+  "mode": "<%= config[:live_retrieve_mode] %>",
+  "resourceMode": "<%= config[:live_retrieve_resource_mode] %>",
+  "encode": <%= config[:live_retrieve_encode] %>,
   "channelName": "checking-01",
   "lastPresetId": null,
   "lastFeedId": null,
-  "poster": "https://example.com/poster.jpeg",
-  "thumbnail": "https://example.com/thumbnail.jpeg",
+  "poster": "<%= config[:live_retrieve_poster] %>",
+  "thumbnail": "<%= config[:live_retrieve_thumbnail] %>",
   "linkPublishSocial": null,
-  "linkStream": "[\"https://www.youtube.com/watch?v=pQzaHPoNX1I\"]",
+  "linkStream": "[
+    "<%= config[:live_retrieve_link_stream] %>"
+  ]",
   "lastPullInfo": null,
   "lastPushInfo": null,
   "lastProcess": null,

@@ -6,18 +6,22 @@
 curl -X GET \
   <%= config[:endpoint] %>/live/entity/dvr \
   -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  live = Uiza::Live.list_recorded
-  puts live.first.id
-  puts live.first.entityId
+  recordeds = Uiza::Live.list_recorded
+  puts recordeds.first.id
+  puts recordeds.first.entityId
 rescue Uiza::Error::UizaError => e
   puts "description_link: #{e.description_link}"
   puts "code: #{e.code}"

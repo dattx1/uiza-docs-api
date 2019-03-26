@@ -9,25 +9,27 @@ curl -X PUT \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id":"095778fa-7e42-45cc-8a0e-6118e540b61d",
-    "name":"Folder edited",
-    "type":"folder",
-    "description":"Folder description new",
-    "orderNumber":1,
-    "icon":"http://exemple.com/icon_001.png"
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:category_update_id] %>",
+    "name": "<%= config[:category_update_name] %>",
+    "type": "<%= config[:category_update_type] %>",
+    "description": "<%= config[:category_update_description] %>",
+    "orderNumber": <%= config[:category_update_order_number] %>
 }'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  id: "your-category-id",
-  name: "Folder edited",
-  type: "folder"
+  id: "<%= config[:category_update_id] %>",
+  name: "<%= config[:category_update_name] %>",
+  type: "<%= config[:category_update_type] %>",
+  description: "<%= config[:category_update_description] %>",
+  orderNumber: <%= config[:category_update_order_number] %>
 }
 
 begin
@@ -204,7 +206,7 @@ Updates the specified category by setting the values of the parameters passed. A
 
 ```json
 {
-  "id": "095778fa-7e42-45cc-8a0e-6118e540b61d"
+  "id": "<%= config[:category_update_id] %>"
 }
 ```
 

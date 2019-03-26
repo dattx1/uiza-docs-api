@@ -8,20 +8,33 @@ curl -X POST \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "url": "https://callback-url.uiza.co",
-    "method": "POST"
-  }'
+    "appId": "<%= config[:app_id] %>",
+    "url": "<%= config[:callback_create_url] %>",
+    "method": "<%= config[:callback_create_method] %>",
+    "jsonData": {
+      "data": "<%= config[:callback_create_json_data] %>"
+    },
+    "headersData": {
+      "data": "<%= config[:callback_create_headers_data] %>"
+    }
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  url: "https://callback-url.uiza.co",
-  method: "POST"
+  url: "<%= config[:callback_create_url] %>",
+  method: "<%= config[:callback_create_method] %>",
+  jsonData: {
+    data: "<%= config[:callback_create_json_data] %>"
+  },
+  headersData: {
+    data: "<%= config[:callback_create_headers_data] %>"
+  }
 }
 
 begin
@@ -194,7 +207,7 @@ This API will allow you setup a callback to your server when an entity is comple
 
 ```json
 {
-  "id": "8b83886e-9cc3-4eab-9258-ebb16c0c73de"
+  "id": "<%= config[:callback_create_id] %>"
 }
 ```
 

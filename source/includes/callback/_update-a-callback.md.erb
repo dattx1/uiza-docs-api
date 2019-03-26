@@ -8,28 +8,35 @@ curl -X PUT \
   -H 'Authorization: <%= config[:token] %>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "0a6bf245-1cce-494f-a193-b5a44aa05558"
-    "url": "https://callback-url.uiza.co",
-    "method": "GET",
-    "headersData": {
-      "Authorization": "Bearer <%= config[:token] %>"
-    },
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:callback_update_id] %>",
+    "url": "<%= config[:callback_update_url] %>",
+    "method": "<%= config[:callback_update_method] %>",
     "jsonData": {
-      "text": "example callback"
+      "data": "<%= config[:callback_update_json_data] %>"
     },
-  }'
+    "headersData": {
+      "data": "<%= config[:callback_update_headers_data] %>"
+    }
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 params = {
-  id: "your-callback-id",
-  url: "https://callback-url.uiza.co",
-  method: "GET"
+  id: "<%= config[:callback_update_id] %>",
+  url: "<%= config[:callback_update_url] %>",
+  method: "<%= config[:callback_update_method] %>",
+  jsonData: {
+    data: "<%= config[:callback_update_json_data] %>"
+  },
+  headersData: {
+    data: "<%= config[:callback_update_headers_data] %>"
+  }
 }
 
 begin
@@ -200,7 +207,7 @@ Updates the specified callback by setting the values of the parameters passed. A
 
 ```json
 {
-  "id": "8b83886e-9cc3-4eab-9258-ebb16c0c73de"
+  "id": "<%= config[:callback_update_id] %>"
 }
 ```
 

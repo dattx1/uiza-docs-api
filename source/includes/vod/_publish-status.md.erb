@@ -5,18 +5,23 @@
 
 ```shell
 curl -X GET \
-  <%= config[:endpoint] %>/media/entity/publish/status?id=<%= config[:uiza_entity_id] %> \
-  -H 'Authorization: <%= config[:token] %>'
+  '<%= config[:endpoint] %>/media/entity/publish/status' \
+  -H 'Authorization: <%= config[:token] %>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "appId": "<%= config[:app_id] %>",
+    "id": "<%= config[:entity_get_status_publish_id] %>"
+}'
 ```
 
 ```ruby
 require "uiza"
 
-Uiza.workspace_api_domain = "<%= config[:endpoint] %>"
+Uiza.app_id = "<%= config[:app_id] %>"
 Uiza.authorization = "<%= config[:token] %>"
 
 begin
-  response = Uiza::Entity.get_status_publish "your-entity-id"
+  response = Uiza::Entity.get_status_publish "<%= config[:entity_get_status_publish_id] %>"
   puts response.progress
   puts response.status
 rescue Uiza::Error::UizaError => e
