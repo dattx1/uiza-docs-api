@@ -33,9 +33,22 @@ end
 ```
 
 ```python
-res, status_code = Entity().get_aws_upload_key()
+import uiza
 
-print("status_code", status_code)
+from uiza.api_resources.entity import Entity
+from uiza.exceptions import ServerException
+
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+try:
+  res, status_code = Entity().get_aws_upload_key()
+
+  print("res: ", res)
+except ServerException as e:
+  raise e
+except Exception as e:
+  raise e
 ```
 
 ```php

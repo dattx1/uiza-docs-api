@@ -60,19 +60,30 @@ end
 ```
 
 ```python
+import uiza
+
 from uiza.api_resources.entity import Entity
+from uiza.exceptions import ServerException
+
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
 
 entity_data = {
-  "name": "The Evolution of Dance",
-  "url": "<%= config[:sample_video] %>",
-  "inputType": "http",
-  "description": "Judson Laipply did a fantastic job in performing various dance moves",
-  "shortDescription": "How good a dancer can you be?"
+  "name": "<%= config[:entity_create_name] %>",
+  "url": "<%= config[:entity_create_url] %>",
+  "inputType": "<%= config[:entity_create_input_type] %>",
+  "description": "<%= config[:entity_create_description] %>",
+  "shortDescription": "<%= config[:entity_create_short_description] %>"
 }
-res, status_code = Entity().create(**entity_data)
 
-print("id: ", res.id)
-print("status_code", status_code)
+try:
+  res, status_code = Entity().create(**entity_data)
+
+  print("res: ", res)
+except ServerException as e:
+  raise e
+except Exception as e:
+  raise e
 ```
 
 ```php

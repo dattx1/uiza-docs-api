@@ -55,13 +55,19 @@ import uiza
 from uiza.api_resources.entity import Entity
 from uiza.exceptions import ServerException
 
-uiza.workspace_api_domain = "your-workspace-api-domain.uiza.co"
-uiza.authorization = "your-authorization"
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+entity_data = {
+  "id": "<%= config[:entity_update_id] %>",
+  "name": "<%= config[:entity_update_name] %>",
+  "description": "<%= config[:entity_update_description] %>"
+}
 
 try:
-  res, status_code = Entity().update(id="your-entity-id", name="Update title")
+  res, status_code = Entity().update(**entity_data)
 
-  print("res ", res)
+  print("res: ", res)
 except ServerException as e:
   raise e
 except Exception as e:

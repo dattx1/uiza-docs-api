@@ -34,12 +34,22 @@ end
 ```
 
 ```python
-entity_id = '33a86c18-f502-41a4-9c4c-d4e14efca238'
+import uiza
 
-res, status_code = Entity().retrieve(entity_id)
+from uiza.api_resources.entity import Entity
+from uiza.exceptions import ServerException
 
-print("id: ", res.id)
-print("status_code", status_code)
+uiza.app_id = "<%= config[:app_id] %>"
+uiza.authorization = "<%= config[:token] %>"
+
+try:
+  res, status_code = Entity().retrieve(id="<%= config[:entity_retrieve_id] %>")
+
+  print("res: ", res)
+except ServerException as e:
+  raise e
+except Exception as e:
+  raise e
 ```
 
 ```php
